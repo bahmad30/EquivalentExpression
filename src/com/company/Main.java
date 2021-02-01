@@ -40,8 +40,8 @@ public class Main {
         String[] parts = input.split(" ");
 
         for (int i = 0; i < parts.length - 1; i++) {
-            if (parts[i].equals("+")) {
-                // addition. get variable before and after, assign value and put in map
+            if (parts[i].equals("+") || parts[i].equals("-")) {
+                // get variable before and after, assign value and put in map
                 String var1 = parts[i - 1];
                 String var2 = parts[i + 1];
 
@@ -52,10 +52,19 @@ public class Main {
                     map.put(var2, rand.nextInt(10) + 1);
                 }
 
-                int result = addition(map.get(var1), map.get(var2));
+                int result = 0;
+                if (parts[i].equals("+")) {
+                    result = addition(map.get(var1), map.get(var2));
+                } else if (parts[i].equals("-")) {
+                    result = subtraction(map.get(var1), map.get(var2));
+                }
                 String resultStr = Integer.toString(result);;
-                parts[i + 1] = resultStr;
                 map.put(resultStr, result);
+
+                parts[i - 1] = resultStr;
+                parts[i] = resultStr;
+                parts[i + 1] = resultStr;
+
                 i++;
             }
         }
@@ -65,5 +74,9 @@ public class Main {
 
     public static int addition(int first, int second) {
         return first + second;
+    }
+
+    public static int subtraction(int first, int second) {
+        return first - second;
     }
 }
