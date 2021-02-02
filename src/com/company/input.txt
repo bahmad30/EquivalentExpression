@@ -1,3 +1,8 @@
-2
+6
 a / b + a / c
 ( a * b + a * c ) / ( b * c )
+www
+a / b - d + a / c + d
+( a / b + a / c ) - ( this - will * be / no )
+yes * ( a / b + a / c ) / yes
+this + works + too + ( a * b + a * c ) / ( b * c ) - this - works - too

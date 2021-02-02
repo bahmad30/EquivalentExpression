@@ -6,37 +6,43 @@ package com.company;
 import java.io.*;
 import java.util.*;
 
-
 public class Main {
     static Random rand = new Random();
-    static int setSize = 0;
-    static String target = "";
-    static List<String> expressions = new ArrayList<>();
+    static int setSize = 0; /* size of set (I used a while scanner.hasNext() loop) */
+    static String target = ""; /* target expression e */
+    static List<String> expressions = new ArrayList<>(); /* list containing expressions */
     static Map<String,Double> map = new HashMap<>(); /* maps variable names to random integers */
 
     /**
      * This main method interprets the input file and writes to the output file.
      * @param args disregard this
-     * @throws FileNotFoundException if file is not found
+     * @throws IOException if there are issues with reading/writing to files (probably a path issue)
      */
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws IOException {
         // read file and get important information, put in variables above
         File file = new File ("/Users/bilaalahmad/IdeaProjects/EquivalentExpression/src/com/company/input.txt");
         Scanner sc = new Scanner(file);
+
         setSize = Integer.parseInt(sc.nextLine());
         target = sc.nextLine();
         while (sc.hasNextLine()) {
             expressions.add(sc.nextLine());
         }
         sc.close();
-        double targetVal = Math.round(evaluator(target, false));
 
         // compare output of each expression to original and write to file
+        FileWriter fileWriter = new FileWriter("output.txt");
+        PrintWriter printWriter = new PrintWriter(fileWriter);
+
+        double targetVal = Math.round(evaluator(target, false));
         for (String exp : expressions) {
             double val = Math.round(evaluator(exp, false));
+            // write to file and print to console
             if (val == targetVal) {
+                printWriter.print("yes");
                 System.out.println("yes");
             } else {
+                printWriter.print("no");
                 System.out.println("no");
             }
         }
@@ -49,16 +55,13 @@ public class Main {
      * @return double representing result of input
      */
     public static double evaluator(String input, boolean working) {
-
         // deals with parenthesis with simple recursion
         if (input.contains("(") && !working) {
-            System.out.println("before eval: " + input);
             int open = input.indexOf("(");
             int closed = input.indexOf(")");
             String inside = input.substring(open + 1, closed).trim();
             String after = Double.toString(evaluator(inside, true));
             input = input.replace(input.substring(open, closed + 1), after);
-            System.out.println("after eval: " + input);
             return evaluator(input, false);
         }
 
@@ -131,7 +134,12 @@ public class Main {
         }
 
         // return the only value in the arraylist after all operations are done
-        return Double.parseDouble(partsList.get(0));
+        try {
+            return Double.parseDouble(partsList.get(0));
+        } catch (NumberFormatException e) {
+            // this will result in "no" (the input was only one variable)
+            return 129312;
+        }
     }
 
     // method for addition
