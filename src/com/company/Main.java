@@ -1,7 +1,11 @@
+// Bilaal Ahmad
+// Equivalent Expression
+
 package com.company;
 
 import java.io.*;
 import java.util.*;
+
 
 public class Main {
     static Random rand = new Random();
@@ -12,8 +16,8 @@ public class Main {
 
     /**
      * This main method interprets the input file and writes to the output file.
-     * @param args unimportant
-     * @throws FileNotFoundException
+     * @param args disregard this
+     * @throws FileNotFoundException if file is not found
      */
     public static void main(String[] args) throws FileNotFoundException {
         // read file and get important information, put in variables above
