@@ -6,7 +6,7 @@ package com.company;
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class EquivalentExpression {
     static Random rand = new Random();
     static int setSize = 0; /* size of set (I used a while scanner.hasNext() loop) */
     static String target = ""; /* target expression e */
@@ -39,13 +39,14 @@ public class Main {
             double val = Math.round(evaluator(exp, false));
             // write to file and print to console
             if (val == targetVal) {
-                printWriter.print("yes");
+                printWriter.println("yes");
                 System.out.println("yes");
             } else {
-                printWriter.print("no");
+                printWriter.println("no");
                 System.out.println("no");
             }
         }
+        printWriter.close();
     }
 
     /**
